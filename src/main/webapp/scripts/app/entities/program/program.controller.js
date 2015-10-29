@@ -1,27 +1,27 @@
 'use strict';
 
 angular.module('admin2App')
-    .controller('RegionController', function ($scope, Region) {
-        $scope.regions = [];
+    .controller('ProgramController', function ($scope, Program) {
+        $scope.programs = [];
         $scope.loadAll = function() {
-            Region.query(function(result) {
-               $scope.regions = result;
+            Program.query(function(result) {
+               $scope.programs = result;
             });
         };
         $scope.loadAll();
 
         $scope.delete = function (id) {
-            Region.get({id: id}, function(result) {
-                $scope.region = result;
-                $('#deleteRegionConfirmation').modal('show');
+            Program.get({id: id}, function(result) {
+                $scope.program = result;
+                $('#deleteProgramConfirmation').modal('show');
             });
         };
 
         $scope.confirmDelete = function (id) {
-            Region.delete({id: id},
+            Program.delete({id: id},
                 function () {
                     $scope.loadAll();
-                    $('#deleteRegionConfirmation').modal('hide');
+                    $('#deleteProgramConfirmation').modal('hide');
                     $scope.clear();
                 });
         };
@@ -32,12 +32,10 @@ angular.module('admin2App')
         };
 
         $scope.clear = function () {
-            $scope.region = {
+            $scope.program = {
                 code: null,
                 description: null,
                 id: null
             };
         };
-        
-        
     });

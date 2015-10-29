@@ -3,7 +3,7 @@
 angular.module('admin2App')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('visual', {
+            .state('visualization', {
                 parent: 'site',
                 url: '/visual',
                 data: {

@@ -1,27 +1,27 @@
 'use strict';
 
 angular.module('admin2App')
-    .controller('RegionController', function ($scope, Region) {
-        $scope.regions = [];
+    .controller('DiagnosisController', function ($scope, Diagnosis) {
+        $scope.diagnosiss = [];
         $scope.loadAll = function() {
-            Region.query(function(result) {
-               $scope.regions = result;
+            Diagnosis.query(function(result) {
+               $scope.diagnosiss = result;
             });
         };
         $scope.loadAll();
 
         $scope.delete = function (id) {
-            Region.get({id: id}, function(result) {
-                $scope.region = result;
-                $('#deleteRegionConfirmation').modal('show');
+            Diagnosis.get({id: id}, function(result) {
+                $scope.diagnosis = result;
+                $('#deleteDiagnosisConfirmation').modal('show');
             });
         };
 
         $scope.confirmDelete = function (id) {
-            Region.delete({id: id},
+            Diagnosis.delete({id: id},
                 function () {
                     $scope.loadAll();
-                    $('#deleteRegionConfirmation').modal('hide');
+                    $('#deleteDiagnosisConfirmation').modal('hide');
                     $scope.clear();
                 });
         };
@@ -32,12 +32,10 @@ angular.module('admin2App')
         };
 
         $scope.clear = function () {
-            $scope.region = {
+            $scope.diagnosis = {
                 code: null,
                 description: null,
                 id: null
             };
         };
-        
-        
     });

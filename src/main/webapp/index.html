@@ -15,6 +15,12 @@
         <!-- build:css assets/styles/main.css -->
         <link rel="stylesheet" href="assets/styles/main.css">
         <!-- endbuild -->
+        
+        <link rel="stylesheet" href="scripts/app/css/dc.css"></link>
+		<!-- Custom styles for this template -->
+    	<link rel="stylesheet" href="scripts/app/css/starter-template.css" ></link>
+    	<link rel="stylesheet" href="scripts/app/css/keen-dashboards.css"></link>
+    	
     </head>
     <body ng-app="admin2App">
         <!--[if lt IE 9]>
@@ -22,11 +28,13 @@
         <![endif]-->
         <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
         <div ui-view="navbar" ng-cloak=""></div>
-        <div class="container">
+        <div class="container-fluid">
+        	 
             <div class="well" ui-view="content"></div>
+            
 
             <div class="footer">
-                <p translate="footer">This is your footer</p>
+                <p translate="footer">Copyright FEi Systems</p>
             </div>
         </div>
 
@@ -140,6 +148,29 @@
     <script src="scripts/app/entities/region/region-dialog.controller.js"></script>
     <script src="scripts/app/entities/region/region-detail.controller.js"></script>
     <script src="scripts/components/entities/region/region.service.js"></script>
+    <script src="scripts/app/entities/diagnosis/diagnosis.js"></script>
+    <script src="scripts/app/entities/diagnosis/diagnosis.controller.js"></script>
+    <script src="scripts/app/entities/diagnosis/diagnosis-dialog.controller.js"></script>
+    <script src="scripts/app/entities/diagnosis/diagnosis-detail.controller.js"></script>
+    <script src="scripts/components/entities/diagnosis/diagnosis.service.js"></script>
+    <script src="scripts/app/entities/program/program.js"></script>
+    <script src="scripts/app/entities/program/program.controller.js"></script>
+    <script src="scripts/app/entities/program/program-dialog.controller.js"></script>
+    <script src="scripts/app/entities/program/program-detail.controller.js"></script>
+    <script src="scripts/components/entities/program/program.service.js"></script>
     <!-- endbuild -->
+    
+    <script src="scripts/app/js/nv.d3.js"></script>
+    <script src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
+    <script src="scripts/app/js/d3.js"></script>
+    <script src="scripts/app/js/dc.js"></script>
+        
+        <!-- My business logic -->
+    
+    <script src="scripts/app/js/keen.min.js"></script>
+    <script src="scripts/app/js/hospitalization.js"></script>
+    
+    
+    
 </body>
 </html>

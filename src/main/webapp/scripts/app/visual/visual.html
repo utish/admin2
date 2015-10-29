@@ -1,11 +1,385 @@
-<div ng-cloak>
-    <div class="row">
-        
-        <div class="col-md-8">
-            <h1>Welcome, Visualization</h1>
-            <p class="lead">This is your homepage</p>
-          
-        </div>
-        
-    </div>
-</div>
+
+<div class="container-fluid">
+		
+					<div class="container-fluid">
+		
+					<div>
+        				<a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+    				</div>
+		
+				    <div class="row">
+				
+				      <div class="col-sm-6">
+				        <div class="row">
+				
+				          
+				          <div class="col-sm-12">
+				            <div class="chart-wrapper">
+				              	<div class="chart-title">
+				                Number of days in hospital
+				                
+				              	</div>
+				              	<div class="chart-stage">
+				                	<div id="chart-numOfDays">
+				                		<a class="reset" href="javascript:numOfDaysChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				                		<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        								</span>
+        								<div class="clearfix"></div>
+				                	</div>
+				              	</div>
+				              	
+				            </div>
+				          </div>
+				          
+				
+				         
+				          <div class="col-sm-6">
+				            <div class="chart-wrapper">
+				              <div class="chart-title">
+				                Program
+				              </div>
+				              	<div class="chart-stage">
+				                <div id="chart-program">
+				                	<a class="reset" href="javascript:programChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				                	<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        							</span>
+        							<div class="clearfix"></div>
+				                </div>
+				              	</div>
+				            </div>
+				          </div>
+				          
+				
+				          
+				          <div class="col-sm-6">
+				            <div class="chart-wrapper">
+				              <div class="chart-title">
+				                Diagnosis
+				              </div>
+				              	<div class="chart-stage">
+				                <div id="chart-diagnosis">
+				                	<a class="reset" href="javascript:diagnosisChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				                	<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        							</span>
+        							<div class="clearfix"></div>
+				                </div>
+				              	</div>
+				            </div>
+				          </div>
+				         
+				
+				        </div>
+				      </div>
+				
+				      <!-- Map -->  
+				      <div class="col-sm-6">
+				        <div class="chart-wrapper">
+				          <div class="chart-title">
+				            Region
+				          </div>
+				          	<div class="chart-stage">
+				            <div id="chart-region">
+				            	<a class="reset" href="javascript:regionChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				            	<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        						</span>
+        						<div class="clearfix"></div>
+				            </div>
+				            </div>
+				        </div>
+				      </div>
+				      <!-- Map -->
+				
+				      <!-- Metric 1 -->
+				      <div class="col-sm-3">
+				        <div class="chart-wrapper">
+				          <div class="chart-title">
+				            Number of Admissions
+				          </div>
+				          	<div class="chart-stage">
+				            	<div id="chart-numOfAdmissions">
+				            		<a class="reset" href="javascript:numOfAdmissionsChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				            		<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        							</span>
+        							<div class="clearfix"></div>
+				            	</div>
+				          	</div>
+				        </div>
+				      </div>
+				      <!-- Metric 1 -->
+				
+				      <!-- Metric 2 -->
+				      <div class="col-sm-3">
+				        <div class="chart-wrapper">
+				          <div class="chart-title">
+				            Costs
+				          </div>
+				          	<div class="chart-stage">
+				            	<div id="chart-costs">
+				            		<a class="reset" href="javascript:costsChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+				            		<span class='reset' style='display: none;'>
+          									Current filter: <span class='filter'></span>
+        							</span>
+        							<div class="clearfix"></div>
+				            	</div>
+				          	</div>
+				        </div>
+				      </div>
+				      <!-- Metric 2 -->
+				
+				    </div>
+		    
+		</div>
+
+
+		  </div>
+		
+<script>
+$(document).ready(
+		function() {
+
+			//var numOfDays;
+			var diagnosis;
+			var program;
+			var region;
+			var numOfAdmissions;
+			var costs;
+			
+			var dignosisData;
+			var diagnosisMap = new Object();
+			
+			var programData;
+			var programMap = new Object();
+			
+			var regionData;
+			var regionMap = new Object();
+			
+			
+			
+			d3.json("api/diagnosiss", function(error, data) {
+				diagnosisData = data;
+				
+				for(var i in diagnosisData) {
+					diagnosisMap[diagnosisData[i].code] = diagnosisData[i].description;
+				}
+				
+			});
+			
+			d3.json("api/programs", function(error, data) {
+				programData = data;
+				
+				for(var i in programData) {
+					programMap[programData[i].code] = programData[i].description;
+				}
+			});
+			
+			d3.json("api/regions", function(error, data) {
+				regionData = data;
+				
+				for(var i in regionData) {
+					regionMap[regionData[i].code] = regionData[i].description;
+				}
+			});
+			
+			d3.json("scripts/app/public/us-states.json", function(error, data) {
+				statesJson = data;
+			});
+			
+			function getDiagnosis(k) {
+			    return diagnosisMap[k];
+			}
+			
+			function getRegion(k) {
+				return regionMap[k];
+			}
+			
+			function getProgram(k) {
+				return programMap[k];
+			}
+
+			
+			d3.json("/data", function(error, data) {
+				//console.log('retrieved the data...');
+				//console.log(data);
+
+				var parseDate = d3.time.format("%m/%d/%Y").parse;
+
+				numOfDaysChart = dc.barChart("#chart-numOfDays");
+				diagnosisChart = dc.pieChart("#chart-diagnosis");
+				programChart = dc.pieChart("#chart-program");
+				regionChart = dc.geoChoroplethChart("#chart-region");
+				numOfAdmissionsChart = dc.rowChart("#chart-numOfAdmissions");
+				costsChart = dc.rowChart("#chart-costs");
+
+				// use cross filter to create the dimensions and grouping
+				var ppr = crossfilter(data);
+				
+				// numOfDays
+				var numOfDaysDim = ppr.dimension(function(d) {
+					return d.numOfDays;
+				});
+
+				var numOfDaysCount = numOfDaysDim.group().reduceCount();
+				
+				// diagnosis
+				var diagnosisDim = ppr.dimension(function(d) {
+					//console.log('diagnosis : ' + d.diagnosis);
+					return d.diagnosis;
+				});
+				
+				var diagnosisCount = diagnosisDim.group().reduceCount();
+				
+				// program
+				
+				var programDim = ppr.dimension(function(d) {
+					return d.program;
+				});
+				
+				var programCount = programDim.group().reduceCount();
+				
+				// region
+				
+				var regionDim = ppr.dimension(function(d) {
+					// TODO: this needs to be optimized...
+					return getRegion(d.region);
+				});
+				
+				var regionCount = regionDim.group().reduceCount();
+				
+				// numOfAdmissions
+				
+				var numOfAdmissionsDim = ppr.dimension(function(d) {
+					return parseInt(d.numOfAdmissions);
+				});
+				
+				var numOfAdmissionsCount = numOfAdmissionsDim.group().reduceCount();
+				
+				// costs
+				
+				var costsDim = ppr.dimension(function(d) {
+					return d.costs;
+				});
+				
+				var costsCount = costsDim.group().reduceCount();
+				
+				//chart definitions....................................
+
+				//numOfDays
+				
+				numOfDaysChart
+				.width(600)
+				.height(250)
+				.margins({top: 10, right: 50, bottom: 30, left: 50})
+				
+				.dimension(numOfDaysDim)
+				.group(numOfDaysCount)
+				.transitionDuration(500)
+				.x(d3.scale.linear().domain([0, 100]))
+				.yAxisLabel("Number of people")
+				.xAxisLabel("Number of days")
+				.elasticY(true);
+				
+				
+				//diagnosis
+				
+				diagnosisChart
+		        .width(300)
+		        .height(250)
+		        .radius(120)
+		        .dimension(diagnosisDim)
+		        .group(diagnosisCount)
+		        .colors(d3.scale.category10())
+		        .label(function (d) {
+		            return getDiagnosis(d.key);
+		        })
+		        .title(function (d) {
+		            return "Diagnosis: " + getDiagnosis(d.key) + "\n" + "Number of people: " + d.value;
+		        });
+		        
+				
+				//program
+				
+				programChart
+		        .width(300)
+		        .height(250)
+		        .radius(120)
+		        .innerRadius(50)
+		        .dimension(programDim)
+		        .group(programCount)
+		        .colors(d3.scale.category10())
+		        .label(function (d) {
+		            return getProgram(d.key);
+		        })
+		        .title(function (d) {
+		            return "Programs: " + getProgram(d.key )+ "\n" + "Number of people: " + d.value;
+		        });
+		        
+				
+				//region
+				regionChart.width(1000)
+				.height(330)
+				.dimension(regionDim)
+				.group(regionCount)
+				.colors(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
+				.colorDomain([0, 200])
+				.colorCalculator(function (d) { return d ? regionChart.colors()(d) : '#ccc'; })
+				.overlayGeoJson(statesJson["features"], "state", function (d) {
+					return d.properties.name;
+				})
+				.projection(d3.geo.albersUsa()
+		    				.scale(600)
+		    				.translate([340, 150]))
+				.title(function (p) {
+					return "State: " + p["key"]
+							+ "\n"
+							+ "Number of people: " + p["value"];
+				})
+				
+				
+				
+				//numOfAdmissions
+				numOfAdmissionsChart
+		        .width(300)
+		        .height(250)
+		        .dimension(numOfAdmissionsDim)
+		        .group(numOfAdmissionsCount)
+		        .colors(d3.scale.category10())
+		        .label(function (d) {
+		            return d.key;
+		        })
+		        .title(function (d) {
+		            return "Number of admissions: " + d.key + "\n" + "Number of people: " + d.value;
+		        })
+		        //.ordering(function(d) { return parseInt(d.key) })
+		        .elasticX(true).xAxis().ticks(4);
+				
+				//costs
+				costsChart
+		        .width(300)
+		        .height(250)
+		        .dimension(costsDim)
+		        .group(costsCount)
+		        .colors(d3.scale.category10())
+		        .label(function (d) {
+		            return d.key;
+		        })
+		        .title(function (d) {
+		            return "Costs: " + d.key + "\n" + "Number of people: " + d.value;
+		        })
+		        .elasticX(true).xAxis().ticks(4);
+				
+   
+				// hit it!
+				dc.renderAll();
+
+			});
+
+		});
+</script>
+
+
+

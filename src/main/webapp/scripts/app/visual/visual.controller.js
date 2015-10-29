@@ -6,4 +6,7 @@ angular.module('admin2App')
             $scope.account = account;
             $scope.isAuthenticated = Principal.isAuthenticated;
         });
+        
+        
+        
     });

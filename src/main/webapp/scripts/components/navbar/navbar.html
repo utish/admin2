@@ -30,6 +30,10 @@
                     <ul class="dropdown-menu">
                         <li ui-sref-active="active" ><a ui-sref="region" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
                         &#xA0;<span >region</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="diagnosis" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
+                        &#xA0;<span >diagnosis</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="program" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
+                        &#xA0;<span >program</span></a></li>
                         <!-- JHipster will add entities to the menu here -->
                     </ul>
                 </li>
@@ -45,8 +49,15 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ui-sref-active="active" ><a ui-sref="visual" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >visual</span></a></li>
+                        <li ui-sref-active="active" >
+                        
+                        <a ui-sref="visualization" data-toggle="collapse" data-target=".navbar-collapse.in" ng-click="loadAll()">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        &#xA0;
+                        <span >visual</span>
+                        </a>
+                        </li>
+                        
                         <!-- JHipster will add entities to the menu here -->
                     </ul>
                 </li>
@@ -62,8 +73,14 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="settings" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-wrench"></span>
-                            &#xA0;<span>Settings</span></a></li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                        <a ui-sref="settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                        &#xA0;
+                        <span>Settings</span>
+                        </a>
+                        </li>
+                            
                         <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="password" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-lock"></span>
                             &#xA0;<span>Password</span></a></li>
                         <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="sessions" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-cloud"></span>
