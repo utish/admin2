@@ -7,7 +7,8 @@ angular.module('admin2App')
                 parent: 'site',
                 url: '/visual',
                 data: {
-                    authorities: []
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'Hospitalization'
                 },
                 views: {
                     'content@': {
