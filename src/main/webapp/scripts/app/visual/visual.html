@@ -151,12 +151,15 @@ $(document).ready(
 			
 			var dignosisData;
 			var diagnosisMap = new Object();
+			var diagnosisDescMap = new Object();
 			
 			var programData;
 			var programMap = new Object();
+			var programDescMap = new Object();
 			
 			var regionData;
 			var regionMap = new Object();
+			var regionDescMap = new Object();
 			
 			
 			
@@ -164,16 +167,23 @@ $(document).ready(
 				diagnosisData = data;
 				
 				for(var i in diagnosisData) {
-					diagnosisMap[diagnosisData[i].code] = diagnosisData[i].description;
+					diagnosisMap[diagnosisData[i].id] = diagnosisData[i].code;
 				}
 				
+				for(var i in diagnosisData) {
+					diagnosisDescMap[diagnosisData[i].id] = diagnosisData[i].description; 
+				}
 			});
 			
 			d3.json("api/programs", function(error, data) {
 				programData = data;
 				
 				for(var i in programData) {
-					programMap[programData[i].code] = programData[i].description;
+					programMap[programData[i].id] = programData[i].code;
+				}
+				
+				for(var i in programData) {
+					programDescMap[programData[i].id] = programData[i].description;
 				}
 			});
 			
@@ -181,7 +191,11 @@ $(document).ready(
 				regionData = data;
 				
 				for(var i in regionData) {
-					regionMap[regionData[i].code] = regionData[i].description;
+					regionMap[regionData[i].id] = regionData[i].code;
+				}
+				
+				for(var i in regionData) {
+					regionDescMap[regionData[i].id] = regionData[i].description;
 				}
 			});
 			
@@ -189,16 +203,28 @@ $(document).ready(
 				statesJson = data;
 			});
 			
-			function getDiagnosis(k) {
+			function getDiagnosisCode(k) {
 			    return diagnosisMap[k];
 			}
 			
-			function getRegion(k) {
+			function getRegionCode(k) {
 				return regionMap[k];
 			}
 			
-			function getProgram(k) {
+			function getProgramCode(k) {
 				return programMap[k];
+			}
+			
+			function getDiagnosisDesc(k) {
+				return diagnosisDescMap[k];
+			}
+			
+			function getRegionDesc(k) {
+				return regionDescMap[k];
+			}
+			
+			function getProgramDesc(k) {
+				return programDescMap[k];
 			}
 
 			
@@ -245,7 +271,7 @@ $(document).ready(
 				
 				var regionDim = ppr.dimension(function(d) {
 					// TODO: this needs to be optimized...
-					return getRegion(d.region);
+					return getRegionDesc(d.region);
 				});
 				
 				var regionCount = regionDim.group().reduceCount();
@@ -294,10 +320,10 @@ $(document).ready(
 		        .group(diagnosisCount)
 		        .colors(d3.scale.category10())
 		        .label(function (d) {
-		            return getDiagnosis(d.key);
+		            return getDiagnosisCode(d.key);
 		        })
 		        .title(function (d) {
-		            return "Diagnosis: " + getDiagnosis(d.key) + "\n" + "Number of people: " + d.value;
+		            return "Diagnosis: " + getDiagnosisDesc(d.key) + "\n" + "Number of people: " + d.value;
 		        });
 		        
 				
@@ -312,10 +338,10 @@ $(document).ready(
 		        .group(programCount)
 		        .colors(d3.scale.category10())
 		        .label(function (d) {
-		            return getProgram(d.key);
+		            return getProgramCode(d.key);
 		        })
 		        .title(function (d) {
-		            return "Programs: " + getProgram(d.key )+ "\n" + "Number of people: " + d.value;
+		            return "Programs: " + getProgramDesc(d.key)+ "\n" + "Number of people: " + d.value;
 		        });
 		        
 				
